@@ -8,6 +8,9 @@ INSTALLED_APPS = [
 
     # Third party apps
     'rest_framework',
+    "corsheaders",
+    'rest_framework_simplejwt',
+    "drf_spectacular",
     "django_filters",
 
     # Local apps
