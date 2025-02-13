@@ -31,7 +31,7 @@ urlpatterns = [
                     ]),
                 ),
                 # Threads API endpoints
-                # path("threads/", include("threads.urls")),
+                path("", include("threads.urls")),
             ],
         ),
     ),

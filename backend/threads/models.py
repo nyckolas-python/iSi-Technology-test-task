@@ -4,15 +4,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-def validate_participants_count(value):
-    if value.count() > 2:
-        raise ValidationError(
-            _('Thread cannot have more than 2 participants.'),
-            code='invalid_participants_count'
-        )
-
 class Thread(models.Model):
-    participants = models.ManyToManyField(User, related_name='threads', validators=[validate_participants_count])
+    participants = models.ManyToManyField(User, related_name='threads')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -20,15 +13,17 @@ class Thread(models.Model):
         ordering = ['created']
         constraints = [
             models.CheckConstraint(
-                check=models.Q(participants__lt=3),
-                name='max_two_participants'
+                check=models.Q(participants__exact=2),
+                name='exact_two_participants'
             )
         ]
 
     def clean(self):
         super().clean()
-        if self.participants.count() > 2:
-            raise ValidationError(_('Thread cannot have more than 2 participants.'))
+        if self.participants.count() != 2:
+            raise ValidationError(_('Thread must have exactly 2 participants.'))
+        if self.participants.filter(id=self.participants.first().id).count() > 1:
+            raise ValidationError(_('User cannot create a chat with themselves.'))
 
     def __str__(self):
         return f"Thread - {self.id}"
