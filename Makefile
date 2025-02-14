@@ -53,7 +53,7 @@ collectstatic:  ## Collect static files
 
 .PHONY: test
 test:  ## Run Django tests
-	$(DOCKER_COMPOSE) exec my_project_app python manage.py test
+	$(DOCKER_COMPOSE) exec my_project_app pytest --cov=threads --cov-report=term-missing
 
 .PHONY: clean
 clean:  ## Clean up unused Docker resources

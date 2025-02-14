@@ -12,31 +12,29 @@ class Command(BaseCommand):
         self.stdout.write('Creating test data...')
 
         # Create users
-        admin = User.objects.create(
+        admin, created = User.objects.get_or_create(
             username='admin',
             email='admin@example.com',
-            password=make_password('admin'),
-            is_staff=True,
-            is_superuser=True
+            defaults={'password': make_password('admin'), 'is_staff': True, 'is_superuser': True}
         )
 
-        user1 = User.objects.create(
+        user1, created = User.objects.get_or_create(
             username='user1',
             email='user1@example.com',
-            password=make_password('user1')
+            defaults={'password': make_password('user1')}
         )
 
-        user2 = User.objects.create(
+        user2, created = User.objects.get_or_create(
             username='user2',
             email='user2@example.com',
-            password=make_password('user2')
+            defaults={'password': make_password('user2')}
         )
 
         # Create threads
-        thread1 = Thread.objects.create(creator=user1)
+        thread1 = Thread.objects.create()
         thread1.participants.set([user1, user2])
 
-        thread2 = Thread.objects.create(creator=user2)
+        thread2 = Thread.objects.create()
         thread2.participants.set([user1, user2])
 
         # Create messages
@@ -54,4 +52,4 @@ class Command(BaseCommand):
             created=timezone.now()
         )
 
-        self.stdout.write(self.style.SUCCESS('Test data created successfully')) 
+        self.stdout.write(self.style.SUCCESS('Test data created successfully'))
