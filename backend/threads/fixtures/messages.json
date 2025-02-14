@@ -1,0 +1,24 @@
+[
+    {
+        "model": "threads.message",
+        "pk": 1,
+        "fields": {
+            "thread": 1,
+            "sender": 2,
+            "text": "Hello from user1!",
+            "created": "2024-01-01T10:00:00Z",
+            "is_read": false
+        }
+    },
+    {
+        "model": "threads.message",
+        "pk": 2,
+        "fields": {
+            "thread": 1,
+            "sender": 3,
+            "text": "Hi user1!",
+            "created": "2024-01-01T10:01:00Z",
+            "is_read": false
+        }
+    }
+] 

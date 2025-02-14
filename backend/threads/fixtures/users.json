@@ -1,0 +1,39 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "admin",
+            "password": "pbkdf2_sha256$600000$hashed_password_here",
+            "is_staff": true,
+            "is_superuser": true,
+            "is_active": true,
+            "email": "admin@example.com",
+            "date_joined": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "user1",
+            "password": "pbkdf2_sha256$600000$hashed_password_here",
+            "is_staff": false,
+            "is_active": true,
+            "email": "user1@example.com",
+            "date_joined": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "username": "user2",
+            "password": "pbkdf2_sha256$600000$hashed_password_here",
+            "is_staff": false,
+            "is_active": true,
+            "email": "user2@example.com",
+            "date_joined": "2024-01-01T00:00:00Z"
+        }
+    }
+] 
