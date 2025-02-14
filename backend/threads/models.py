@@ -11,12 +11,13 @@ class Thread(models.Model):
 
     class Meta:
         ordering = ['created']
-        constraints = [
-            models.CheckConstraint(
-                check=models.Q(participants__exact=2),
-                name='exact_two_participants'
-            )
-        ]
+        # SQLite3 do not support CheckConstraint
+        # constraints = [
+        #     models.CheckConstraint(
+        #         check=models.Q(participants__exact=2),
+        #         name='exact_two_participants'
+        #     )
+        # ]
 
     def clean(self):
         super().clean()

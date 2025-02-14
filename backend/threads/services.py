@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.db.models import Count, QuerySet
 
-from .models import Message, Thread
+from .models import Message, Thread, User
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +35,6 @@ class ThreadService:
             Thread.objects.filter(participants__id__in=[user_id, participant_id])
             .annotate(participant_count=Count('participants'))
             .filter(participant_count=2)
-            .select_related('creator')
             .prefetch_related('participants')
             .first()
         )
@@ -54,7 +53,7 @@ class ThreadService:
             Created Thread instance
         """
         with transaction.atomic():
-            thread = Thread.objects.create(creator_id=creator_id)
+            thread = Thread.objects.create()
             thread.participants.set([creator_id, participant_id])
             logger.info(
                 f"Created new thread {thread.id} between users {creator_id} and {participant_id}"
@@ -66,7 +65,6 @@ class ThreadService:
         """Get all user threads with optimized queries"""
         return (
             Thread.objects.filter(participants__id=user_id)
-            .select_related('creator')
             .prefetch_related('participants')
             .order_by('-updated')
         )
@@ -108,8 +106,7 @@ class MessageService:
                 id__in=message_ids,
                 thread__participants__id=user_id,  # User must be thread participant
                 is_read=False,  # Only update unread messages
-                sender_id__ne=user_id,  # User must not be sender
-            ).update(is_read=True)
+            ).exclude(sender_id=user_id).update(is_read=True)
 
     @staticmethod
     def can_mark_message_as_read(user: User, message: Message) -> bool:
@@ -158,7 +155,6 @@ class UserService:
         """
         return (
             Thread.objects.filter(participants__id=user_id)
-            .select_related('creator')
             .prefetch_related('participants')
             .order_by('-updated')
         )
