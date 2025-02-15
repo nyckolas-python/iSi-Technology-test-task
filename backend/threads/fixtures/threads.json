@@ -3,7 +3,6 @@
         "model": "threads.thread",
         "pk": 1,
         "fields": {
-            "creator": 2,
             "participants": [2, 3],
             "created": "2024-01-01T10:00:00Z",
             "updated": "2024-01-01T10:00:00Z"
@@ -13,10 +12,9 @@
         "model": "threads.thread",
         "pk": 2,
         "fields": {
-            "creator": 3,
             "participants": [2, 3],
             "created": "2024-01-01T11:00:00Z",
             "updated": "2024-01-01T11:00:00Z"
         }
     }
-] 
+]

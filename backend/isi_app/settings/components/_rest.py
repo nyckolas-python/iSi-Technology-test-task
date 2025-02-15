@@ -21,6 +21,22 @@ REST_FRAMEWORK = {
 
 LOGIN_REDIRECT_URL = "/api/v1/swagger/"
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'ISI Project API',
+    'DESCRIPTION': 'ISI test project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "displayOperationId": False,
+    },
+    'SERVE_PERMISSIONS': ['rest_framework.permissions.IsAuthenticated'],
+    "SERVE_AUTHENTICATION": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+}
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(
         minutes=config(

@@ -28,11 +28,10 @@ class ThreadCreateSerializer(serializers.Serializer):
 
 class ThreadReadSerializer(serializers.ModelSerializer):
     participants = UserSerializer(many=True, read_only=True)
-    creator = UserSerializer(read_only=True)
 
     class Meta:
         model = Thread
-        fields = ("id", "participants", "creator", "created", "updated")
+        fields = ("id", "participants", "created", "updated")
         read_only_fields = fields
 
 
